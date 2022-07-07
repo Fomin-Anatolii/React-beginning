@@ -13,7 +13,7 @@ const Users = () => {
     let people = `человек`
     let word = `тусанёт`
 
-    if (number === 3 || number === 2 || number === 4) {
+    if (number >= 2 && number <= 4) {
       word = `тусанут`
       people = `человека`
     }
@@ -67,7 +67,7 @@ const Users = () => {
     ))
   }
   if (users.length === 0) {
-    return <span className="badge bg-danger fs-1">Никто не тусанёт с тобой сегодня</span>
+    return <span className="badge bg-danger fs-2">Никто не тусанёт с тобой сегодня</span>
   }
   return (
     <>
