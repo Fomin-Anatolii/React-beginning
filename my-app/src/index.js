@@ -1,8 +1,11 @@
-import React from "react"
-import reactDOM from "react-dom"
+import { createRoot } from "react-dom/client"
 import "bootstrap/dist/css/bootstrap.css"
+import Counter from "./components/counter"
 
-const element = <h1>Hello world</h1>
-console.log(element)
+const App = () => {
+  return <Counter />
+}
 
-reactDOM.render(element, document.getElementById(`root`))
+const container = document.getElementById("root")
+const root = createRoot(container) // createRoot(container!) if you use TypeScript
+root.render(<App tab="home" />)
