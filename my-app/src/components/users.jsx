@@ -66,7 +66,9 @@ const Users = () => {
       </tr>
     ))
   }
-
+  if (users.length === 0) {
+    return <span className="badge bg-danger fs-1">Никто не тусанёт с тобой сегодня</span>
+  }
   return (
     <>
       <h2>{handlePhrase()}</h2>
