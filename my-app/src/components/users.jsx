@@ -13,14 +13,18 @@ const Users = () => {
     let people = `человек`
     let word = `тусанёт`
 
-    if (number >= 2 && number <= 4) {
+    if (number % 10 === 2 || number % 10 === 3 || number % 10 === 4) {
       word = `тусанут`
       people = `человека`
+    }
+    if (number >= 11 && number <= 14) {
+      people = `человек`
+      word = `тусанёт`
     }
 
     const getClasses = () => {
       let classes = "badge"
-      number !== 0 ? (classes += ` bg-primary`) : (classes += " bg-danger")
+      !number ? (classes += " bg-danger") : (classes += ` bg-primary`)
       return classes
     }
 
