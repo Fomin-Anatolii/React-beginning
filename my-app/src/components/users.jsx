@@ -10,16 +10,16 @@ const Users = () => {
 
   const handlePhrase = (number) => {
     number = users.length
-    let people = `человек`
-    let word = `тусанёт`
+    let word
+    number > 1 ? (word = "тусанут") : (word = "тусанёт")
 
-    if (number % 10 === 2 || number % 10 === 3 || number % 10 === 4) {
-      word = `тусанут`
+    let people = `человек`
+
+    if (number % 10 >= 2 && number % 10 <= 4) {
       people = `человека`
     }
-    if (number >= 11 && number <= 14) {
+    if ((number >= 11 && number <= 14) || (number % 100 >= 12 && number % 100 <= 14)) {
       people = `человек`
-      word = `тусанёт`
     }
 
     const getClasses = () => {
