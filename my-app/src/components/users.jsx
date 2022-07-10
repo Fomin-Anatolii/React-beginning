@@ -3,85 +3,61 @@ import api from "../api"
 
 const Users = () => {
   const [users, setUsers] = useState(api.users.fetchAll())
-
   const handleDelete = (userId) => {
-    setUsers((prevState) => prevState.filter((name) => name !== userId))
+    setUsers(users.filter((user) => user._id !== userId))
   }
 
-  const handlePhrase = (number) => {
-    number = users.length
-    let word
-    number > 1 ? (word = "тусанут") : (word = "тусанёт")
-
-    let people = `человек`
-
-    if (number % 10 >= 2 && number % 10 <= 4) {
-      people = `человека`
-    }
-    if ((number >= 11 && number <= 14) || (number % 100 >= 12 && number % 100 <= 14)) {
-      people = `человек`
-    }
-
-    const getClasses = () => {
-      let classes = "badge"
-      !number ? (classes += " bg-danger") : (classes += ` bg-primary`)
-      return classes
-    }
-
-    let span = (
-      <span className={getClasses()}>
-        {number} {people} {word} с тобой сегодня
-      </span>
-    )
-
-    return span
-  }
-
-  const headRow = () => {
-    const headArr = [`Имя`, `Качества`, `Профессия`, `Встретился, раз`, `Оценка`]
-    return headArr.map((title) => <th key={title}>{title}</th>)
-  }
-
-  const getBadges = (qualities) => {
-    return qualities.map(({ _id, name, color }) => (
-      <span className={"badge  m-1 bg-" + color} key={_id}>
-        {name}
-      </span>
-    ))
-  }
-
-  const bodyRow = () => {
-    return users.map((user) => (
-      <tr key={user._id}>
-        <td>{user.name}</td>
-        <td>{getBadges(user.qualities)}</td>
-        <td>{user.profession.name}</td>
-        <td>{user.completedMeetings}</td>
-        <td>{user.rate}/5</td>
-        <td>
-          <button
-            type="button"
-            className="btn btn-danger btn-sm"
-            onClick={() => handleDelete(user)}
-          >
-            Delete
-          </button>
-        </td>
-      </tr>
-    ))
-  }
-  if (users.length === 0) {
-    return <span className="badge bg-danger fs-2">Никто не тусанёт с тобой сегодня</span>
+  const renderPhrase = (number) => {
+    const lastOne = Number(number.toString().slice(-1))
+    if (number > 4 && number < 15) return "человек тусанут"
+    if ([2, 3, 4].indexOf(lastOne) >= 0) return "человекa тусанут"
+    if (lastOne === 1) return "человек тусанёт"
   }
   return (
     <>
-      <h2>{handlePhrase()}</h2>
-      <table className="table table-hover">
-        <thead>
-          <tr>{headRow()}</tr>
-        </thead>
-        <tbody>{bodyRow()}</tbody>
-      </table>
+      <h2>
+        <span className={"badge bg-" + (!users.length ? "danger" : "primary")}>
+          {users.length > 0
+            ? `${users.length} ${renderPhrase(users.length)} с тобой сегодня`
+            : "Никто с тобой сегодня не тусанёт"}
+        </span>
+      </h2>
+      {users.length > 0 && (
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">Имя</th>
+              <th scope="col">Качества</th>
+              <th scope="col">Профессия</th>
+              <th scope="col">Встретился, раз</th>
+              <th scope="col">Оценка</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user._id}>
+                <td>{user.name}</td>
+                <td>
+                  {user.qualities.map((item) => (
+                    <span key={item._id} className={"badge m-1 bg-" + item.color}>
+                      {item.name}
+                    </span>
+                  ))}
+                </td>
+                <td>{user.profession.name}</td>
+                <td>{user.completedMeetings}</td>
+                <td>{user.rate + "/5"}</td>
+                <td>
+                  <button className="btn btn-danger" onClick={() => handleDelete(user._id)}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </>
   )
 }
