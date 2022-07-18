@@ -1,18 +1,8 @@
-import SearchStatus from "./searchStatus"
 import User from "./user"
 
 const Users = ({ users, ...rest }) => {
   return (
-    <div>
-      <h2>
-        <span className={"badge bg-" + (!users.length ? "danger" : "primary")}>
-          {users.length > 0 ? (
-            <SearchStatus length={users.length} />
-          ) : (
-            "Никто с тобой сегодня не тусанёт"
-          )}
-        </span>
-      </h2>
+    <>
       {users.length > 0 && (
         <table className="table">
           <thead>
@@ -29,13 +19,13 @@ const Users = ({ users, ...rest }) => {
           <tbody>
             {users.map((user) => (
               <tr key={user._id}>
-                <User {...user} onHandleToggleBookmark={rest.onHandleToggleBookmark} />
+                <User {...user} {...rest} />
               </tr>
             ))}
           </tbody>
         </table>
       )}
-    </div>
+    </>
   )
 }
 

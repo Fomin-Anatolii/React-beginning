@@ -1,26 +1,31 @@
 import Qualitie from "./qualitie"
 import Bookmark from "./bookmark"
 
-const User = ({ name, profession, rate, completedMeetings, ...rest }) => {
+const User = ({
+  _id,
+  name,
+  qualities,
+  profession,
+  completedMeetings,
+  rate,
+  favorites,
+  onDelete,
+  onToggleBookmark,
+}) => {
   return (
     <>
       <td>{name}</td>
       <td>
-        <Qualitie qualities={rest.qualities} />
+        <Qualitie qualities={qualities} />
       </td>
       <td>{profession.name}</td>
       <td>{completedMeetings}</td>
       <td>{rate + "/5"}</td>
       <td>
-        <Bookmark
-          key={rest._id}
-          id={rest._id}
-          favorites={rest.favorites}
-          handleToggleBookmark={rest.onHandleToggleBookmark}
-        />
+        <Bookmark key={_id} id={_id} favorites={favorites} onClick={() => onToggleBookmark(_id)} />
       </td>
       <td>
-        <button className="btn btn-danger" onClick={() => rest.onHandleDelete(rest._id)}>
+        <button className="btn btn-danger" onClick={() => onDelete(_id)}>
           Delete
         </button>
       </td>

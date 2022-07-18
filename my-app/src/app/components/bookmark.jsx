@@ -1,7 +1,7 @@
 const Bookmark = ({ favorites, ...rest }) => {
   return (
-    <button onClick={() => rest.handleToggleBookmark(rest.id)}>
-      <i className={favorites ? "bi bi-bookmark-fill" : "bi bi-bookmark"}></i>
+    <button {...rest}>
+      <i className={"bi bi-bookmark" + (favorites ? "-fill" : "")}></i>
     </button>
   )
 }
