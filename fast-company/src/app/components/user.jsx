@@ -1,5 +1,5 @@
 import React from "react"
-import Qualitie from "./qualitie"
+import Quality from "./quality"
 import Bookmark from "./bookmark"
 import PropTypes from "prop-types"
 
@@ -18,7 +18,7 @@ const User = ({
         <>
             <td>{name}</td>
             <td>
-                <Qualitie qualities={qualities} />
+                <Quality qualities={qualities} />
             </td>
             <td>{profession.name}</td>
             <td>{completedMeetings}</td>
