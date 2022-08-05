@@ -1,15 +1,45 @@
 import React from "react"
+import PropTypes from "prop-types"
 
-const GroupList = () => {
+const GroupList = ({
+    items,
+    valueProperty,
+    contentProperty,
+    onItemSelect,
+    selectedItem
+}) => {
     return (
         <ul className="list-group">
-            <li className="list-group-item">An item</li>
-            <li className="list-group-item">A second item</li>
-            <li className="list-group-item">A third item</li>
-            <li className="list-group-item">A fourth item</li>
-            <li className="list-group-item">And a fifth one</li>
+            {Object.keys(items).map((item) => {
+                return (
+                    <li
+                        className={
+                            "list-group-item" +
+                            (items[item] === selectedItem ? " active" : "")
+                        }
+                        key={items[item][valueProperty]}
+                        onClick={() => onItemSelect(items[item])}
+                        role="button"
+                    >
+                        {items[item][contentProperty]}
+                    </li>
+                )
+            })}
         </ul>
     )
+}
+
+GroupList.defaultProps = {
+    contentProperty: "name",
+    valueProperty: "_id"
+}
+
+GroupList.propTypes = {
+    items: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    valueProperty: PropTypes.string,
+    contentProperty: PropTypes.string,
+    onItemSelect: PropTypes.func,
+    selectedItem: PropTypes.object
 }
 
 export default GroupList
