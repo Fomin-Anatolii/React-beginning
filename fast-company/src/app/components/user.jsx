@@ -10,7 +10,7 @@ const User = ({
     profession,
     completedMeetings,
     rate,
-    favorites,
+    bookmark,
     onDelete,
     onToggleBookmark
 }) => {
@@ -27,7 +27,7 @@ const User = ({
                 <Bookmark
                     key={_id}
                     id={_id}
-                    favorites={favorites}
+                    bookmark={bookmark}
                     onClick={() => onToggleBookmark(_id)}
                 />
             </td>
@@ -50,7 +50,7 @@ User.propTypes = {
     profession: PropTypes.object.isRequired,
     completedMeetings: PropTypes.number.isRequired,
     rate: PropTypes.number.isRequired,
-    favorites: PropTypes.bool.isRequired,
+    bookmark: PropTypes.bool.isRequired,
     onDelete: PropTypes.func.isRequired,
     onToggleBookmark: PropTypes.func.isRequired
 }
