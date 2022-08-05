@@ -25,10 +25,19 @@ const Users = ({ users, ...rest }) => {
     const handleProfessionSelect = (item) => {
         setSelectedProf(item)
     }
-    const filteredUsers = selectedProf
-        ? users.filter((user) => user.profession === selectedProf)
-        : users
+    let filteredUsers = null
+    if (selectedProf) {
+        filteredUsers = users.filter(
+            (user) =>
+                JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+        )
+    } else filteredUsers = users
     const count = filteredUsers.length
+
+    const startIndex = (currentPage - 1) * pageSize
+    if (startIndex >= filteredUsers.length) {
+        setCurrentPage(currentPage - 1)
+    }
     const userCrop = paginate(filteredUsers, currentPage, pageSize)
 
     const clearFilter = () => {
