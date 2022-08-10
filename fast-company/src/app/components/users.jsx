@@ -6,12 +6,14 @@ import api from "../api"
 import UserTable from "./usersTable"
 import SearchStatus from "./searchStatus"
 import PropTypes from "prop-types"
+import _ from "lodash"
 
 const Users = ({ users, ...rest }) => {
-    const pageSize = 2
+    const pageSize = 8
     const [currentPage, setCurrentPage] = useState(1)
     const [professions, setProfessions] = useState()
     const [selectedProf, setSelectedProf] = useState()
+    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" })
 
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfessions(data))
@@ -21,6 +23,9 @@ const Users = ({ users, ...rest }) => {
 
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex)
+    }
+    const handleSort = (item) => {
+        setSortBy(item)
     }
     const handleProfessionSelect = (item) => {
         setSelectedProf(item)
@@ -33,12 +38,12 @@ const Users = ({ users, ...rest }) => {
         )
     } else filteredUsers = users
     const count = filteredUsers.length
-
+    const sortedUsers = _.orderBy(filteredUsers, [sortBy.iter], [sortBy.order])
     const startIndex = (currentPage - 1) * pageSize
     if (startIndex >= filteredUsers.length) {
         setCurrentPage(currentPage - 1)
     }
-    const userCrop = paginate(filteredUsers, currentPage, pageSize)
+    const userCrop = paginate(sortedUsers, currentPage, pageSize)
 
     const clearFilter = () => {
         setSelectedProf()
@@ -62,7 +67,14 @@ const Users = ({ users, ...rest }) => {
             )}
             <div className="d-flex flex-column">
                 <SearchStatus length={count} />
-                {count > 0 && <UserTable users={userCrop} {...rest} />}
+                {count > 0 && (
+                    <UserTable
+                        users={userCrop}
+                        onSort={handleSort}
+                        selectedSort={sortBy}
+                        {...rest}
+                    />
+                )}
                 <div className="d-flex justify-content-center">
                     <Pagination
                         itemsCount={count}
