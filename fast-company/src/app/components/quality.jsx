@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const Qualitie = ({ qualities }) => {
+const Quality = ({ qualities }) => {
     return (
         <>
             {qualities.map((item) => (
@@ -13,8 +13,10 @@ const Qualitie = ({ qualities }) => {
     )
 }
 
-Qualitie.propTypes = {
-    qualities: PropTypes.array.isRequired
+Quality.propTypes = {
+    qualities: PropTypes.array.isRequired,
+    name: PropTypes.string,
+    _id: PropTypes.string
 }
 
-export default Qualitie
+export default Quality
