@@ -41,7 +41,7 @@ const Users = ({ users, ...rest }) => {
     const userCrop = paginate(filteredUsers, currentPage, pageSize)
 
     const clearFilter = () => {
-        setSelectedProf()
+        return setSelectedProf()
     }
     return (
         <div className="d-flex">
