@@ -2,8 +2,15 @@ import React from "react"
 import PropTypes from "prop-types"
 import TableHeader from "./tableHeader"
 import TableBody from "./tableBody"
-
-const UserTable = ({ users, onSort, selectedSort, ...rest }) => {
+import Bookmark from "./bookmark"
+const UserTable = ({
+    users,
+    onSort,
+    selectedSort,
+    onToggleBookmark,
+    onDelete,
+    ...rest
+}) => {
     const columns = {
         name: { path: "name", name: "Имя" },
         qualities: { name: "Качества" },
@@ -13,8 +20,26 @@ const UserTable = ({ users, onSort, selectedSort, ...rest }) => {
             name: "Встретился, раз"
         },
         rate: { path: "rate", name: "Оценка" },
-        bookmark: { path: "bookmark", name: "Избранное" },
-        delete: {}
+        bookmark: {
+            path: "bookmark",
+            name: "Избранное",
+            component: (user) => (
+                <Bookmark
+                    bookmark={user.bookmark}
+                    onClick={() => onToggleBookmark(user._id)}
+                />
+            )
+        },
+        delete: {
+            component: (user) => (
+                <button
+                    className="btn btn-danger"
+                    onClick={() => onDelete(user._id)}
+                >
+                    Delete
+                </button>
+            )
+        }
     }
     return (
         <table className="table">
@@ -33,7 +58,9 @@ const UserTable = ({ users, onSort, selectedSort, ...rest }) => {
 UserTable.propTypes = {
     users: PropTypes.array.isRequired,
     onSort: PropTypes.func.isRequired,
-    selectedSort: PropTypes.object.isRequired
+    selectedSort: PropTypes.object.isRequired,
+    onToggleBookmark: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired
 }
 
 export default UserTable

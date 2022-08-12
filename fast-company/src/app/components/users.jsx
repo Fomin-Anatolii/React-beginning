@@ -38,7 +38,7 @@ const Users = ({ users, ...rest }) => {
         )
     } else filteredUsers = users
     const count = filteredUsers.length
-    const sortedUsers = _.orderBy(filteredUsers, [sortBy.iter], [sortBy.order])
+    const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order])
     const startIndex = (currentPage - 1) * pageSize
     if (startIndex >= filteredUsers.length) {
         setCurrentPage(currentPage - 1)
