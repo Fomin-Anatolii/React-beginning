@@ -1,17 +1,16 @@
 import React from "react"
 import PropTypes from "prop-types"
-import TableHeader from "./tableHeader"
-import TableBody from "./tableBody"
+// import TableHeader from "./tableHeader"
+// import TableBody from "./tableBody"
 import Bookmark from "./bookmark"
 import QualitiesList from "./qualitiesList"
-
+import Table from "./table"
 const UserTable = ({
     users,
     onSort,
     selectedSort,
     onToggleBookmark,
-    onDelete,
-    ...rest
+    onDelete
 }) => {
     const columns = {
         name: { path: "name", name: "Имя" },
@@ -47,17 +46,16 @@ const UserTable = ({
         }
     }
     return (
-        <table className="table">
-            <TableHeader {...{ onSort, selectedSort, columns }} />
-            <TableBody {...{ columns, data: users }} />
-            {/* <tbody>
-                {users.map((user) => (
-                    <tr key={user._id}>
-                        <User {...user} {...rest} />
-                    </tr>
-                ))}
-            </tbody> */}
-        </table>
+        // <Table>
+        //     <TableHeader {...{ onSort, selectedSort, columns }} />
+        //     <TableBody {...{ columns, data: users }} />
+        // </Table>
+        <Table
+            onSort={onSort}
+            selectedSort={selectedSort}
+            columns={columns}
+            data={users}
+        />
     )
 }
 UserTable.propTypes = {
