@@ -16,7 +16,6 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
     }
   }
   let arrow = ""
-  console.log(selectedSort)
 
   if (selectedSort.order === "asc") {
     arrow = <i className="bi bi-caret-up-fill"></i>
@@ -39,7 +38,9 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
             scope="col"
           >
             {columns[column].name}
-            {columns[column].path === selectedSort.path && arrow}
+            {columns[column].path === selectedSort.path
+              ? selectedSort.path && arrow
+              : null}
           </th>
         ))}
       </tr>
