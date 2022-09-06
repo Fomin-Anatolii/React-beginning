@@ -77,6 +77,7 @@ const UsersList = () => {
 
     const clearFilter = () => {
       setSelectedProf()
+      setSearchUsers("")
     }
 
     return (
@@ -100,9 +101,9 @@ const UsersList = () => {
             <div className="form-outline">
               <input
                 type="search"
-                id="form1"
                 placeholder="Search..."
                 className="form-control"
+                value={searchUsers}
                 onChange={handleSearchUsers}
                 onClick={clearFilter}
               />
