@@ -15,6 +15,11 @@ const UsersList = () => {
   const [selectedProf, setSelectedProf] = useState()
   const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" })
   const [users, setUsers] = useState()
+  const [searchUsers, setSearchUsers] = useState("")
+
+  const handleSearchUsers = (e) => {
+    setSearchUsers(e.target.value)
+  }
 
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data))
@@ -38,6 +43,7 @@ const UsersList = () => {
   useEffect(() => setCurrentPage(1), [selectedProf])
   const handleProfessionSelect = (item) => {
     setSelectedProf(item)
+    setSearchUsers("")
   }
   const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex)
@@ -51,6 +57,10 @@ const UsersList = () => {
       filteredUsers = users.filter(
         (user) =>
           JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+      )
+    } else if (searchUsers.trim() !== "") {
+      filteredUsers = users.filter((user) =>
+        user.name.toLowerCase().includes(searchUsers)
       )
     } else filteredUsers = users
     // const filteredUsers = selectedProf
@@ -86,6 +96,21 @@ const UsersList = () => {
 
         <div className="d-flex flex-column">
           <SearchStatus length={count} />
+          <div className="input-group">
+            <div className="form-outline">
+              <input
+                type="search"
+                id="form1"
+                placeholder="Search..."
+                className="form-control"
+                onChange={handleSearchUsers}
+                onClick={clearFilter}
+              />
+            </div>
+            <button type="button" className="btn btn-primary">
+              <i className="bi bi-search"></i>
+            </button>
+          </div>
           {count > 0 && (
             <UserTable
               users={userCrop}
