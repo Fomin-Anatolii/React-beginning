@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import api from "../../api"
 import { validator } from "../../utils/validator"
+import RadioField from "../common/form/radioField"
 import SelectField from "../common/form/selectField"
 import TextFiled from "../common/form/textField"
 
@@ -8,7 +9,8 @@ const RegisterForm = () => {
     const [data, setData] = useState({
         email: "",
         password: "",
-        profession: ""
+        profession: "",
+        sex: "male"
     })
     const [professions, setProfessions] = useState()
     useEffect(() => {
@@ -89,7 +91,16 @@ const RegisterForm = () => {
                 error={errors.profession}
                 label="Выберите вашу профессию"
             />
-
+            <RadioField
+                options={[
+                    { name: "Male", value: "male" },
+                    { name: "Female", value: "female" },
+                    { name: "Other", value: "other" }
+                ]}
+                onChange={handleChange}
+                value={data.sex}
+                name="sex"
+            />
             <button
                 type="submit"
                 disabled={!isValidButton}
