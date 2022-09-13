@@ -6,8 +6,8 @@ import { useHistory } from "react-router-dom"
 
 const UserPage = ({ usersID }) => {
     const history = useHistory()
-    const handleBackAllUsers = () => {
-        history.replace("/users")
+    const handleEditUser = () => {
+        history.replace(`/users/${usersID}/edit`)
     }
     const [userObject, setUserObject] = useState()
 
@@ -28,9 +28,9 @@ const UserPage = ({ usersID }) => {
                 <li className="list-group-item">
                     <button
                         className="btn btn-secondary btn-sm"
-                        onClick={handleBackAllUsers}
+                        onClick={handleEditUser}
                     >
-                        All users
+                        Edit
                     </button>
                 </li>
             </ul>

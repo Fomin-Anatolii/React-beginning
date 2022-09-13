@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import api from "../../api"
 import { validator } from "../../utils/validator"
+import CheckboxField from "../common/form/checkboxField"
 import MultiSelectField from "../common/form/multiSelectField"
 import RadioField from "../common/form/radioField"
 import SelectField from "../common/form/selectField"
@@ -13,7 +14,8 @@ const RegisterForm = () => {
         password: "",
         profession: "",
         sex: "male",
-        qualities: []
+        qualities: [],
+        license: false
     })
     const [professions, setProfessions] = useState()
     useEffect(() => {
@@ -49,6 +51,12 @@ const RegisterForm = () => {
         },
         profession: {
             isRequired: { message: "Выбор професии обязателен" }
+        },
+        license: {
+            isRequired: {
+                message:
+                    "Вы не можете использовать наш сервис без подтверждения лицензионного соглашения"
+            }
         }
     }
 
@@ -93,6 +101,7 @@ const RegisterForm = () => {
                 value={data.profession}
                 error={errors.profession}
                 label="Выберите профессию"
+                name="propfessions"
             />
             <RadioField
                 options={[
@@ -110,7 +119,16 @@ const RegisterForm = () => {
                 onChange={handleChange}
                 name="qualities"
                 label="Выберите ваши качества"
+                defaultValue={data.qualities}
             />
+            <CheckboxField
+                value={data.license}
+                onChange={handleChange}
+                name="license"
+                error={errors.license}
+            >
+                Подтвердить <a>лицензионное соглашение</a>
+            </CheckboxField>
             <button
                 type="submit"
                 disabled={!isValidButton}
